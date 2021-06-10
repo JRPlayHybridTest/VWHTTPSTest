@@ -1,0 +1,26 @@
+{
+  "name": "threemodelviewerar",
+  "version": "0.0.1",
+  "description": "",
+  "main": "Renderer.js",
+  "dependencies": {
+    "browserify": "^17.0.0",
+    "esmify": "^2.1.1",
+    "jsbi": "^3.1.4",
+    "jszip": "^3.6.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/playhybrid/ThreeModelViewerAR.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/playhybrid/ThreeModelViewerAR/issues"
+  },
+  "homepage": "https://github.com/playhybrid/ThreeModelViewerAR#readme"
+}
