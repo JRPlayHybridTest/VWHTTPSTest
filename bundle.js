@@ -2308,7 +2308,7 @@ function init() {
   modelviewer = document.createElement("model-viewer");
   modelviewer.setAttribute("style", "width: 0; height: 0;");
   modelviewer.setAttribute("ar", "");
-  modelviewer.setAttribute("ar-modes", "scene-viewer");
+  modelviewer.setAttribute("ar-modes", "webxr");
   document.head.appendChild(script); // Prepend instead of append so that the shitty, broken template HTML
   // cannot mess with the modelviewer. Yay.
 
