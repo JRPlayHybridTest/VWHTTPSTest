@@ -2302,6 +2302,32 @@ const script = document.createElement("script");
 script.type = "module";
 script.src = "https://unpkg.com/@google/model-viewer@1.6.0/dist/model-viewer.min.js";
 let modelviewer;
+let arButton = document.getElementById('arButton');
+arButton.onclick = function()
+{    
+    modelviewer.activateAR().then(() => {
+      // Restore original overflow style.
+      document.body.style.overflow = originalOverflowProp;
+      new GLTFExporter().parse(scene, function (res) {
+        setTimeout(function (res) {
+          // At this point 'canActivateAR' hopefully should contain the real value.
+          // If we were to check it right after the 'activateAR' promise resolved,
+          // then the value would somehow always be false...
+          const canActivateAR = modelviewer.canActivateAR;
+
+          if (canActivateAR === false) {
+            console.log("Error: Can't activate AR");
+          } else if (canActivateAR !== true) {
+            console.log("canActivateAR is not a boolean.");
+          }
+
+          const url = URL.createObjectURL(new Blob([res]));
+          modelviewer.setAttribute("src", url);
+        }, 2000, res);
+      });
+    }); 
+}
+
 init();
 
 function init() {
@@ -2352,40 +2378,7 @@ function init() {
     gltf.cameras; // Array<THREE.Camera>
 
     gltf.asset; // Object
-    // There is a bug in Google Chrome 87 which causes the browser to crash
-    // when activating an AR session with a DOM overlay in some cases.
-    // It seems to be related to the scrolling content of the website.
-    // I don't know why exactly, but setting 'overflow' to 'hidden' circumvents this bug.
-    // Sources:
-    // - https://github.com/google/model-viewer/issues/1694
-    // - https://bugs.chromium.org/p/chromium/issues/detail?id=1149708#c6
-
-    const originalOverflowProp = document.body.style.overflow;
-    document.body.style.overflow = "hidden"; // Uncomment and fix relative link for environment map
-    //modelviewer.setAttribute("environment-image", `./${HASH}/android_ar.hdr`);
-
-    modelviewer.setAttribute("src", `https://jrplayhybridtest.github.io/aframe-test/AnimatedMorphCube.glb`);
-    modelviewer.activateAR().then(() => {
-      // Restore original overflow style.
-      document.body.style.overflow = originalOverflowProp;
-      new GLTFExporter().parse(scene, function (res) {
-        setTimeout(function (res) {
-          // At this point 'canActivateAR' hopefully should contain the real value.
-          // If we were to check it right after the 'activateAR' promise resolved,
-          // then the value would somehow always be false...
-          const canActivateAR = modelviewer.canActivateAR;
-
-          if (canActivateAR === false) {
-            console.log("Error: Can't activate AR");
-          } else if (canActivateAR !== true) {
-            console.log("canActivateAR is not a boolean.");
-          }
-
-          const url = URL.createObjectURL(new Blob([res]));
-          modelviewer.setAttribute("src", url);
-        }, 2000, res);
-      });
-    }); // new GLTFExporter().parse(scene, function(res) {
+     // new GLTFExporter().parse(scene, function(res) {
     //     let blob;
     //     let filename = "scene";
     //     if ( res instanceof ArrayBuffer ) {
