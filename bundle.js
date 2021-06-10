@@ -2364,7 +2364,7 @@ function init() {
     document.body.style.overflow = "hidden"; // Uncomment and fix relative link for environment map
     //modelviewer.setAttribute("environment-image", `./${HASH}/android_ar.hdr`);
 
-    modelviewer.setAttribute("src", `http://jrplayhybridtest.github.io/aframe-test/AnimatedMorphCube.glb`);
+    modelviewer.setAttribute("src", `https://jrplayhybridtest.github.io/aframe-test/AnimatedMorphCube.glb`);
     modelviewer.activateAR().then(() => {
       // Restore original overflow style.
       document.body.style.overflow = originalOverflowProp;
