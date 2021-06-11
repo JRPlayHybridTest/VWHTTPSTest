@@ -2305,6 +2305,7 @@ let modelviewer;
 let arButton = document.getElementById('arButton');
 arButton.onclick = function()
 {    
+    modelviewer.setAttribute("src", `https://jrplayhybridtest.github.io/aframe-test/AnimatedMorphCube.glb`);
     modelviewer.activateAR().then(() => {
       // Restore original overflow style.
       document.body.style.overflow = originalOverflowProp;
