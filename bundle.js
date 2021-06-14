@@ -1,8 +1,3 @@
-import * as THREE from 'https://cdn.skypack.dev/three@0.129.0';
-import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/GLTFLoader.js';
-import { OrbitControls } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/controls/OrbitControls.js';
-import { GLTFExporter } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/exporters/GLTFExporter.js';
-
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 'use strict'
 
@@ -2302,33 +2297,32 @@ const script = document.createElement("script");
 script.type = "module";
 script.src = "https://unpkg.com/@google/model-viewer@1.6.0/dist/model-viewer.min.js";
 let modelviewer;
-
 const originalOverflowProp = document.body.style.overflow;
 document.body.style.overflow = "hidden";
 let arButton = document.getElementById('arButton');
-arButton.onclick = function()
-{    
-    modelviewer.setAttribute("src", `https://jrplayhybridtest.github.io/aframe-test/AnimatedMorphCube.glb`);
-    modelviewer.activateAR().then(() => {
-      // Restore original overflow style.
-      document.body.style.overflow = originalOverflowProp;
-      new GLTFExporter().parse(scene, function (res) {
-          // At this point 'canActivateAR' hopefully should contain the real value.
-          // If we were to check it right after the 'activateAR' promise resolved,
-          // then the value would somehow always be false...
-          const canActivateAR = modelviewer.canActivateAR;
 
-          if (canActivateAR === false) {
-            console.log("Error: Can't activate AR");
-          } else if (canActivateAR !== true) {
-            console.log("canActivateAR is not a boolean.");
-          }
+arButton.onclick = function () {
+  modelviewer.setAttribute("src", `https://jrplayhybridtest.github.io/aframe-test/AnimatedMorphCube.glb`);
+  modelviewer.activateAR().then(() => {
+    // Restore original overflow style.
+    document.body.style.overflow = originalOverflowProp;
+    new GLTFExporter().parse(scene, function (res) {
+      // At this point 'canActivateAR' hopefully should contain the real value.
+      // If we were to check it right after the 'activateAR' promise resolved,
+      // then the value would somehow always be false...
+      const canActivateAR = modelviewer.canActivateAR;
 
-          const url = URL.createObjectURL(new Blob([res]));
-          modelviewer.setAttribute("src", url);
-      });
-    }); 
-}
+      if (canActivateAR === false) {
+        console.log("Error: Can't activate AR");
+      } else if (canActivateAR !== true) {
+        console.log("canActivateAR is not a boolean.");
+      }
+
+      const url = URL.createObjectURL(new Blob([res]));
+      modelviewer.setAttribute("src", url);
+    });
+  });
+};
 
 init();
 
@@ -2367,9 +2361,9 @@ function init() {
   const manager = new THREE.LoadingManager();
   const loader = new GLTFLoader(manager);
   loader.load( // resource URL
-  'rooster.glb', // called when the resource is loaded
+  'https://jrplayhybridtest.github.io/aframe-test/AnimatedMorphCube.glb', // called when the resource is loaded
   function (gltf) {
-    gltf.scene.scale.set(15, 15, 15);
+    gltf.scene.scale.set(1, 1, 1);
     scene.add(gltf.scene);
     gltf.animations; // Array<THREE.AnimationClip>
 
@@ -2378,9 +2372,7 @@ function init() {
     gltf.scenes; // Array<THREE.Group>
 
     gltf.cameras; // Array<THREE.Camera>
-
-    gltf.asset; // Object
-     // new GLTFExporter().parse(scene, function(res) {
+    // new GLTFExporter().parse(scene, function(res) {
     //     let blob;
     //     let filename = "scene";
     //     if ( res instanceof ArrayBuffer ) {
