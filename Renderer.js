@@ -89,7 +89,7 @@ function init() {
         'https://jrplayhybridtest.github.io/aframe-test/AnimatedMorphCube.glb',
         // called when the resource is loaded
         function ( gltf ) {
-            gltf.scene.scale.set(1,1,1);
+            gltf.scene.scale.set(15,15,15);
     
             scene.add( gltf.scene );
     
@@ -158,11 +158,11 @@ function init() {
 
     //
 
-    const ground = new THREE.Mesh( new THREE.PlaneGeometry( 1000, 1000 ), new THREE.MeshPhongMaterial( { color: 0x999999, depthWrite: false } ) );
-    ground.rotation.x = - Math.PI / 2;
-    ground.position.y = 11;
-    ground.receiveShadow = true;
-    scene.add( ground );
+    // const ground = new THREE.Mesh( new THREE.PlaneGeometry( 1000, 1000 ), new THREE.MeshPhongMaterial( { color: 0x999999, depthWrite: false } ) );
+    // ground.rotation.x = - Math.PI / 2;
+    // ground.position.y = 11;
+    // ground.receiveShadow = true;
+    // scene.add( ground );
 
     //
 
@@ -195,6 +195,8 @@ function save( blob, filename ) {
     link.download = filename;
     link.click();
 
+    return link.href;
+
     // URL.revokeObjectURL( url ); breaks Firefox...
 
 }
@@ -208,7 +210,7 @@ function saveString( text, filename ) {
 
 function saveArrayBuffer( buffer, filename ) {
 
-    save( new Blob( [ buffer ], { type: 'application/octet-stream' } ), filename );
+    return save( new Blob( [ buffer ], { type: 'application/octet-stream' } ), filename );
 
 }
 

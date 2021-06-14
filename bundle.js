@@ -2307,7 +2307,7 @@ document.body.style.overflow = "hidden";
 let arButton = document.getElementById('arButton');
 
 arButton.onclick = function () {
-  modelviewer.setAttribute("src", `https://jrplayhybridtest.github.io/aframe-test/AnimatedMorphCube.glb`);
+  modelviewer.setAttribute("src", `Scene.glb`);
   modelviewer.activateAR().then(() => {
     // Restore original overflow style.
     document.body.style.overflow = originalOverflowProp;
@@ -2323,9 +2323,18 @@ arButton.onclick = function () {
         console.log("canActivateAR is not a boolean.");
       }
 
-      const url = URL.createObjectURL(new Blob([res]));
+      const url = URL.createObjectURL(new Blob([res], {
+        type: 'application/octet-stream'
+      }));
+      const link = document.createElement("a");
+      link.download = "Scene.glb";
+
+        link.href = url;
+        // https://cwervo.com/writing/quicklook-web/#launching-without-a-preview-image-using-javascript
+        link.appendChild(document.createElement("img"));
+        //link.click();
       modelviewer.setAttribute("src", url);
-    });
+    }, {binary: true});
   });
 };
 
@@ -2366,9 +2375,9 @@ function init() {
   const manager = new THREE.LoadingManager();
   const loader = new GLTFLoader(manager);
   loader.load( // resource URL
-  'https://jrplayhybridtest.github.io/aframe-test/AnimatedMorphCube.glb', // called when the resource is loaded
+  'Scene.glb', // called when the resource is loaded
   function (gltf) {
-    gltf.scene.scale.set(1, 1, 1);
+    gltf.scene.scale.set(15, 15, 15);
     scene.add(gltf.scene);
     gltf.animations; // Array<THREE.AnimationClip>
 
@@ -2419,14 +2428,14 @@ function init() {
   }; //
 
 
-  const ground = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), new THREE.MeshPhongMaterial({
-    color: 0x999999,
-    depthWrite: false
-  }));
-  ground.rotation.x = -Math.PI / 2;
-  ground.position.y = 11;
-  ground.receiveShadow = true;
-  scene.add(ground); //
+  // const ground = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), new THREE.MeshPhongMaterial({
+  //   color: 0x999999,
+  //   depthWrite: false
+  // }));
+  // ground.rotation.x = -Math.PI / 2;
+  // ground.position.y = 11;
+  // ground.receiveShadow = true;
+  // scene.add(ground); //
 
   renderer = new THREE.WebGLRenderer({
     antialias: true
