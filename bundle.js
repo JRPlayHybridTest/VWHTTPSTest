@@ -2302,6 +2302,9 @@ const script = document.createElement("script");
 script.type = "module";
 script.src = "https://unpkg.com/@google/model-viewer@1.6.0/dist/model-viewer.min.js";
 let modelviewer;
+
+const originalOverflowProp = document.body.style.overflow;
+document.body.style.overflow = "hidden";
 let arButton = document.getElementById('arButton');
 arButton.onclick = function()
 {    
@@ -2310,7 +2313,6 @@ arButton.onclick = function()
       // Restore original overflow style.
       document.body.style.overflow = originalOverflowProp;
       new GLTFExporter().parse(scene, function (res) {
-        setTimeout(function (res) {
           // At this point 'canActivateAR' hopefully should contain the real value.
           // If we were to check it right after the 'activateAR' promise resolved,
           // then the value would somehow always be false...
@@ -2324,7 +2326,6 @@ arButton.onclick = function()
 
           const url = URL.createObjectURL(new Blob([res]));
           modelviewer.setAttribute("src", url);
-        }, 2000, res);
       });
     }); 
 }
