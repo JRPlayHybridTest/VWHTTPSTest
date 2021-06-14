@@ -2328,13 +2328,14 @@ arButton.onclick = function () {
       }));
       const link = document.createElement("a");
       link.download = "Scene.glb";
+      link.href = url; // https://cwervo.com/writing/quicklook-web/#launching-without-a-preview-image-using-javascript
 
-        link.href = url;
-        // https://cwervo.com/writing/quicklook-web/#launching-without-a-preview-image-using-javascript
-        link.appendChild(document.createElement("img"));
-        //link.click();
+      link.appendChild(document.createElement("img")); //link.click();
+
       modelviewer.setAttribute("src", url);
-    }, {binary: true});
+    }, {
+      binary: true
+    });
   });
 };
 
@@ -2375,9 +2376,9 @@ function init() {
   const manager = new THREE.LoadingManager();
   const loader = new GLTFLoader(manager);
   loader.load( // resource URL
-  'Scene.glb', // called when the resource is loaded
+  'rooster.glb', // called when the resource is loaded
   function (gltf) {
-    gltf.scene.scale.set(15, 15, 15);
+    gltf.scene.scale.set(5, 5, 5);
     scene.add(gltf.scene);
     gltf.animations; // Array<THREE.AnimationClip>
 
@@ -2426,16 +2427,13 @@ function init() {
   manager.onLoad = function () {
     render();
   }; //
-
-
-  // const ground = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), new THREE.MeshPhongMaterial({
-  //   color: 0x999999,
-  //   depthWrite: false
-  // }));
-  // ground.rotation.x = -Math.PI / 2;
+  // const ground = new THREE.Mesh( new THREE.PlaneGeometry( 1000, 1000 ), new THREE.MeshPhongMaterial( { color: 0x999999, depthWrite: false } ) );
+  // ground.rotation.x = - Math.PI / 2;
   // ground.position.y = 11;
   // ground.receiveShadow = true;
-  // scene.add(ground); //
+  // scene.add( ground );
+  //
+
 
   renderer = new THREE.WebGLRenderer({
     antialias: true
@@ -2461,7 +2459,8 @@ function init() {
 function save(blob, filename) {
   link.href = URL.createObjectURL(blob);
   link.download = filename;
-  link.click(); // URL.revokeObjectURL( url ); breaks Firefox...
+  link.click();
+  return link.href; // URL.revokeObjectURL( url ); breaks Firefox...
 }
 
 function saveString(text, filename) {
@@ -2471,7 +2470,7 @@ function saveString(text, filename) {
 }
 
 function saveArrayBuffer(buffer, filename) {
-  save(new Blob([buffer], {
+  return save(new Blob([buffer], {
     type: 'application/octet-stream'
   }), filename);
 }

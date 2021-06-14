@@ -32,9 +32,18 @@ arButton.onclick = function()
             console.log("canActivateAR is not a boolean.");
           }
 
-          const url = URL.createObjectURL(new Blob([res]));
+          const url = URL.createObjectURL(new Blob([res], {
+            type: 'application/octet-stream'
+          }));
+          const link = document.createElement("a");
+          link.download = "Scene.glb";
+    
+            link.href = url;
+            // https://cwervo.com/writing/quicklook-web/#launching-without-a-preview-image-using-javascript
+            link.appendChild(document.createElement("img"));
+            //link.click();
           modelviewer.setAttribute("src", url);
-      });
+        }, {binary: true});
     }); 
 }
 
@@ -86,10 +95,10 @@ function init() {
     const loader = new GLTFLoader(manager);
     loader.load(
         // resource URL
-        'https://jrplayhybridtest.github.io/aframe-test/AnimatedMorphCube.glb',
+        'rooster.glb',
         // called when the resource is loaded
         function ( gltf ) {
-            gltf.scene.scale.set(15,15,15);
+            gltf.scene.scale.set(5,5,5);
     
             scene.add( gltf.scene );
     
