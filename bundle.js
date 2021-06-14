@@ -2379,6 +2379,7 @@ function init() {
   'rooster.glb', // called when the resource is loaded
   function (gltf) {
     gltf.scene.scale.set(5, 5, 5);
+    gltf.scene.position.x = 10;
     scene.add(gltf.scene);
     gltf.animations; // Array<THREE.AnimationClip>
 
@@ -2416,6 +2417,26 @@ function init() {
     //     link.click();
     //     console.log(blob);
     // });    
+  }, // called while loading is progressing
+  function (xhr) {
+    console.log(xhr.loaded / xhr.total * 100 + '% loaded');
+  }, // called when loading has errors
+  function (error) {
+    console.log('An error happened');
+  });
+  loader.load( // resource URL
+  'https://jrplayhybridtest.github.io/aframe-test/AnimatedMorphCube.glb', // called when the resource is loaded
+  function (gltf) {
+    gltf.scene.scale.set(5, 5, 5);
+    gltf.scene.position.x = -10;
+    scene.add(gltf.scene);
+    gltf.animations; // Array<THREE.AnimationClip>
+
+    gltf.scene; // THREE.Group
+
+    gltf.scenes; // Array<THREE.Group>
+
+    gltf.cameras; // Array<THREE.Camera>
   }, // called while loading is progressing
   function (xhr) {
     console.log(xhr.loaded / xhr.total * 100 + '% loaded');
